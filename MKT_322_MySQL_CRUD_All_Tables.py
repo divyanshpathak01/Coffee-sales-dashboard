@@ -345,19 +345,21 @@ def render_html(html):
 # MYSQL CONNECTION + LOAD DATA
 # ============================================================
 
+
 def connect_db():
-    """Connect to the local MySQL database."""
+    """Connect to the cloud MySQL database."""
     try:
         return mysql.connector.connect(
-            host="localhost",
-            user="root",
-            password="12345678",
-            database="coffee_sales_db",
-            port=3306
+            host=st.secrets["mysql"]["host"],
+            user=st.secrets["mysql"]["user"],
+            password=st.secrets["mysql"]["password"],
+            database=st.secrets["mysql"]["database"],
+            port=int(st.secrets["mysql"]["port"])
         )
-    except mysql.connector.Error as error:
+    except Exception as error:
         st.error(f"MySQL connection failed: {error}")
         return None
+
 
 
 def get_mysql_tables():
